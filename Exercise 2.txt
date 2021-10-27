@@ -1,0 +1,8 @@
+***Q2***;
+LIBNAME qstn_2 '/home/u59795375/';
+
+PROC IMPORT DATAFILE = '/home/u59795375/sasuser.v94/sas_demo.csv'
+OUT = file_2 
+DBMS = csv 
+REPLACE;
+RUN;
