@@ -1,0 +1,12 @@
+***Q1***;
+LIBNAME data '/home/u59795375/';
+
+FILENAME dirlist PIPE 'dir "/home/u59795375/*" /b';
+%LET DIRNAME = /home/u59795375/;
+
+DATA data.dirlist ;
+INFILE dirlist lrecl = 200 truncover;
+INPUT file_name $100.;
+RUN;
+
+

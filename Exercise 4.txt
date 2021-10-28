@@ -1,0 +1,11 @@
+%LET myfilerf = 'sas_demo.csv'; 
+                                                                                                             
+%MACRO test;                                                                                                                            
+  %IF %SYSFUNC (FILEEXIST(&myfilerf)) %THEN                                                                                              
+   %LET fid = %SYSFUNC (fopen(&myfilerf));                                                                                                 
+  %ELSE                                                                                                                                 
+  %PUT FAIL;                                                                                     
+%MEND test;                                                                                                                             
+                                                                                                                                        
+OPTIONS mprint;                                                                                                                         
+%test 

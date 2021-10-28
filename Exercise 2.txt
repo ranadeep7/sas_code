@@ -1,0 +1,38 @@
+***Q2***;
+LIBNAME qstn_2 '/home/u59795375/';
+
+DATA _NULL_;
+SET dirlist end=done;
+call symputx(cats("file_name",_N_),file_name);
+if done then call symputx('n_rows',_N_);
+RUN;
+
+%put &&file_name&&n_rows;
+
+DATA temp_dir(keep=file_name);
+INFILE dirlist truncover;
+INPUT txt $1-1000;
+file_name = scan(txt,-1," ");
+if strip(lowcase(scan(txt,-1,".")))="txt";
+run;
+
+PROC SQL noprint;
+SELECT file_name,count(*)
+into : file_name separated by "@" ,:file_count
+FROM temp_dir;
+QUIT;
+
+%macro read_file;
+%do i=1 %to &file_count;
+%let file = %scan(&file_name,&i,"@");
+%put &file.;
+%let name = %scan(&file,1,".");
+%put &name.;
+data a_&name. ;
+infile "&dirname.&file" truncover;
+input txt $1-1000;
+run;
+%end;
+%mend;
+
+%read_file;
